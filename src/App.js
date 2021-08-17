@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState,useEffect} from 'react';
+import Table from "./Components/Table"
 
-function App() {
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+
+const App = () => {
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/todos')
+      .then((response) => response.json())
+      .then((json) => console.log(json[0].title));
+
+      
+  }, []);
+
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <table >
+      <thead>
+        <tr>
+          <td>Todo Id{data[0].title}</td>
+          <td>Title</td>
+          <td>Status</td>
+          <td>Action</td>
+        </tr>
+      </thead>
+      </table>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
