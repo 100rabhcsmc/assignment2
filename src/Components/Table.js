@@ -34,10 +34,16 @@ const Datatable = ({ data }, props) => {
   const [userid, setUserId] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [sau, setSau] = useState("");
+  const [title,setTitle] = useState("")
+  const [todoid,setToDoId]=useState("");
+  const [todotitle,setToDoTitle]=useState("");
+  
 
-  const btnClick = (id) => {
+  const btnClick = (id,TodoId,TodoTitle) => {
     console.log(id);
+    setTitle(`User Details`)
+    setToDoId(`ToDo Id:${TodoId}`)
+    setToDoTitle(`ToDo Title:${TodoTitle}`)
     fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
       .then((res) => res.json())
       .then((json) => {
@@ -46,14 +52,6 @@ const Datatable = ({ data }, props) => {
         setEmail(JSON.stringify(`Email:${json.email}`).slice(1, -1));
       });
 
-      <div>
-            {data.map((row) => (
-                setSau(
-                   (`title:${row.title}`)
-                   
-                )
-            ))}
-      </div>
   };
 
   return (
@@ -79,7 +77,7 @@ const Datatable = ({ data }, props) => {
                 </TableCell>
 
                 <TableCell>
-                  <button onClick={() => btnClick(row.userId)}>
+                  <button onClick={() => btnClick(row.userId,row.id,row.title)}>
                     View User
                   </button>
                 </TableCell>
@@ -90,8 +88,9 @@ const Datatable = ({ data }, props) => {
       </TableContainer>
       <div className="UserData">
         <div className="data">
-          
-          <h5>{sau}</h5>
+          <h2>{title}</h2>
+          <h5>{todoid}</h5>
+          <h5>{todotitle}</h5>
           <h5>
             {userid}
             <br />
