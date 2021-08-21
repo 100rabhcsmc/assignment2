@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
@@ -9,6 +9,7 @@ import {
   TableRow,
   Paper,
 } from "@material-ui/core";
+import "./Table.css";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -18,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 15,
     margin: "10px 10px",
     maxWidth: 700,
+    overflow: "hidden",
+    position: "absolute",
   },
   tableHeaderCell: {
     fontWeight: "bold",
@@ -26,57 +29,82 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-const Datatable= ({data},props) => {
+const Datatable = ({ data }, props) => {
   const classes = useStyles();
+  const [userid, setUserId] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [sau, setSau] = useState("");
 
-  const btnClick=()=>{
-    alert(
-      <table>
-          {data.map((row) => (
-            <tr key={row.id}>
-              {/* <td >{row.id}</td> */}
-              <td >{row.title}</td>
-              {/* <td >{row.completed ? "completed" : "Incompleted"}</td> */}
-           </tr>  ))}
-        </table>
-     
-    // "you are clicked"
-    
-    )        
-  }
-  
+  const btnClick = (id) => {
+    console.log(id);
+    fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
+      .then((res) => res.json())
+      .then((json) => {
+        setUserId(JSON.stringify(`User Id:${json.id}`).slice(1, -1));
+        setName(JSON.stringify(`Name:${json.name}`).slice(1, -1));
+        setEmail(JSON.stringify(`Email:${json.email}`).slice(1, -1));
+      });
+
+      <div>
+            {data.map((row) => (
+                setSau(
+                   (`title:${row.title}`)
+                   
+                )
+            ))}
+      </div>
+  };
 
   return (
-    <TableContainer component={Paper} className={classes.tableContainer}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell className={classes.tableHeaderCell}>ToDo ID</TableCell>
-            <TableCell className={classes.tableHeaderCell}>Title</TableCell>
-            <TableCell className={classes.tableHeaderCell}>Status</TableCell>
-            <TableCell className={classes.tableHeaderCell}>Action</TableCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {data.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell style={{ width: "5rem" }}>{row.id}</TableCell>
-              <TableCell style={{ width: "9rem" }}>{row.title}</TableCell>
-              <TableCell>{row.completed ? "completed" : "Incompleted"}</TableCell>
-              
-              <TableCell>
-                <button onClick={btnClick}>View User</button>
-              </TableCell>
+    <div className="data_container">
+      <TableContainer component={Paper} className={classes.tableContainer}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.tableHeaderCell}>ToDo ID</TableCell>
+              <TableCell className={classes.tableHeaderCell}>Title</TableCell>
+              <TableCell className={classes.tableHeaderCell}>Status</TableCell>
+              <TableCell className={classes.tableHeaderCell}>Action</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+
+          <TableBody>
+            {data.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell style={{ width: "5rem" }}>{row.id}</TableCell>
+                <TableCell style={{ width: "9rem" }}>{row.title}</TableCell>
+                <TableCell>
+                  {row.completed ? "completed" : "Incompleted"}
+                </TableCell>
+
+                <TableCell>
+                  <button onClick={() => btnClick(row.userId)}>
+                    View User
+                  </button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <div className="UserData">
+        <div className="data">
+          
+          <h5>{sau}</h5>
+          <h5>
+            {userid}
+            <br />
+          </h5>
+          <h5>
+            {name}
+            <br />
+          </h5>
+          <h5>{email}</h5>
+        </div>
+      </div>
+    </div>
   );
 };
-
 
 export default Datatable;
