@@ -1,0 +1,23 @@
+
+.data_container{
+    display: flex;
+    z-index: -1;
+   
+}
+.UserData{
+    display: flex;
+    width: 50%;
+    margin-left: 60%;
+    margin-top: 4%;
+    position: fixed;
+    
+}
+.data{
+    
+    padding: 20px;
+    font-size: 20px;
+    width: 60%;
+    
+}
+
+
