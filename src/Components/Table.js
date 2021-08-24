@@ -35,6 +35,7 @@ const Datatable = ({ data }, props) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
+<<<<<<< HEAD
   // const [todoid, setToDoId] = useState("");
   // const [todotitle, setToDoTitle] = useState("");
   const [tododata, setTodoData] = useState([]);
@@ -44,6 +45,16 @@ const Datatable = ({ data }, props) => {
     setTitle(`User Details`);
     // setToDoId(`ToDo Id:${TodoId}`);
     // setToDoTitle(`ToDo Title:${TodoTitle}`);
+=======
+  const [todoid, setToDoId] = useState("");
+  const [todotitle, setToDoTitle] = useState("");
+
+  const btnClick = (id, TodoId, TodoTitle) => {
+    console.log(id);
+    setTitle(`User Details`);
+    setToDoId(`ToDo Id:${TodoId}`);
+    setToDoTitle(`ToDo Title:${TodoTitle}`);
+>>>>>>> 7b70fb6d50f1cec3bb5ddb1853ece82e8c696be2
     fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
       .then((res) => res.json())
       .then((json) => {
@@ -51,10 +62,13 @@ const Datatable = ({ data }, props) => {
         setName(JSON.stringify(`Name:${json.name}`).slice(1, -1));
         setEmail(JSON.stringify(`Email:${json.email}`).slice(1, -1));
       });
+<<<<<<< HEAD
 
       fetch(`https://jsonplaceholder.typicode.com/todos?userId=${id}`)
       .then((res) => res.json())
       .then((json) => setTodoData(json)); 
+=======
+>>>>>>> 7b70fb6d50f1cec3bb5ddb1853ece82e8c696be2
   };
 
   return (
@@ -94,10 +108,16 @@ const Datatable = ({ data }, props) => {
       <div className="UserData">
         <div className="data">
           <h2>{title}</h2>
+<<<<<<< HEAD
     
           {tododata.map((row) => (
           <h4>{row.id}</h4>
           <h3>{row.title}</h3>
+=======
+
+          <h5>{todoid}</h5>
+          <h5>{todotitle}</h5>
+>>>>>>> 7b70fb6d50f1cec3bb5ddb1853ece82e8c696be2
           <h5>
             {userid}
             <br />
