@@ -34,16 +34,16 @@ const Datatable = ({ data }, props) => {
   const [userid, setUserId] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [title,setTitle] = useState("")
-  const [todoid,setToDoId]=useState("");
-  const [todotitle,setToDoTitle]=useState("");
-  
+  const [title, setTitle] = useState("");
+  // const [todoid, setToDoId] = useState("");
+  // const [todotitle, setToDoTitle] = useState("");
+  const [tododata, setTodoData] = useState([]);
 
-  const btnClick = (id,TodoId,TodoTitle) => {
+  const btnClick = (id) => {
     console.log(id);
-    setTitle(`User Details`)
-    setToDoId(`ToDo Id:${TodoId}`)
-    setToDoTitle(`ToDo Title:${TodoTitle}`)
+    setTitle(`User Details`);
+    // setToDoId(`ToDo Id:${TodoId}`);
+    // setToDoTitle(`ToDo Title:${TodoTitle}`);
     fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
       .then((res) => res.json())
       .then((json) => {
@@ -52,6 +52,9 @@ const Datatable = ({ data }, props) => {
         setEmail(JSON.stringify(`Email:${json.email}`).slice(1, -1));
       });
 
+      fetch(`https://jsonplaceholder.typicode.com/todos?userId=${id}`)
+      .then((res) => res.json())
+      .then((json) => setTodoData(json)); 
   };
 
   return (
@@ -77,7 +80,9 @@ const Datatable = ({ data }, props) => {
                 </TableCell>
 
                 <TableCell>
-                  <button onClick={() => btnClick(row.userId,row.id,row.title)}>
+                  <button
+                    onClick={() => btnClick(row.userId, row.id, row.title)}
+                  >
                     View User
                   </button>
                 </TableCell>
@@ -89,18 +94,25 @@ const Datatable = ({ data }, props) => {
       <div className="UserData">
         <div className="data">
           <h2>{title}</h2>
-          <h5>{todoid}</h5>
-          <h5>{todotitle}</h5>
+    
+          {tododata.map((row) => (
+          <h4>{row.id}</h4>
+          <h3>{row.title}</h3>
           <h5>
             {userid}
             <br />
           </h5>
+
           <h5>
             {name}
             <br />
           </h5>
+
           <h5>{email}</h5>
+          ))}
+          
         </div>
+        
       </div>
     </div>
   );
