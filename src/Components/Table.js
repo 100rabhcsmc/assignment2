@@ -96,7 +96,7 @@ const Datatable = ({ data }, props) => {
           <h2>{title}</h2>
     
           {tododata.map((row) => (
-          <><h4>ToDoId: {row.id}</h4><h3>ToDoTitle: {row.title}</h3><h5>
+          <><h4>ToDoId: {row.id}</h4><h5>ToDoTitle: {row.title}</h5><h5>
               {userid}
               <br />
             </h5><h5>
